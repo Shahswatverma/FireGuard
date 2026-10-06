@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FireGuard - Resident Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f5f6fa;
+            color: #222;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            background: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        .logo span {
+            color: #ff3b30;
+        }
+
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+        .logout {
+            padding: 9px 18px;
+
+            border: none;
+
+            background: #ff3b30;
+            color: white;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+        }
+
+
+        /* CONTAINER */
+
+        .container {
+            padding: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+
+        /* CARDS */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+        }
+
+
+        .card h3 {
+
+            color: #777;
+
+            font-size: 15px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+        }
+
+
+        .danger {
+            color: #ff3b30;
+        }
+
+
+        .warning {
+            color: #ff9500;
+        }
+
+
+        .safe {
+            color: #28a745;
+        }
+
+
+        /* SECTION */
+
+        .section {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+
+            margin-bottom: 25px;
+        }
+
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+
+        /* REPORT FORM */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .form-group label {
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            padding: 12px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color: #ff3b30;
+        }
+
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 100px;
+        }
+
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+
+        .report-btn {
+
+            margin-top: 20px;
+
+            padding: 12px 22px;
+
+            border: none;
+
+            background: #ff3b30;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+        }
+
+
+        .report-btn:hover {
+            background: #e83228;
+        }
+
+
+        /* ALERT */
+
+        .alert {
+
+            border: 1px solid #ddd;
+
+            padding: 18px;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .alert-fire {
+
+            border-left:
+                5px solid #ff3b30;
+        }
+
+
+        .alert-smoke {
+
+            border-left:
+                5px solid #ff9500;
+        }
+
+
+        .alert-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+
+        .alert-header strong {
+            font-size: 17px;
+        }
+
+
+        .badge {
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .fire-badge {
+
+            background: #ffe5e3;
+
+            color: #ff3b30;
+        }
+
+
+        .smoke-badge {
+
+            background: #fff0d5;
+
+            color: #ff9500;
+        }
+
+
+        .alert-info {
+
+            color: #555;
+
+            line-height: 1.8;
+        }
+
+
+        .description {
+
+            background: #f4f5f8;
+
+            padding: 12px;
+
+            margin-top: 15px;
+
+            border-radius: 8px;
+
+            color: #555;
+        }
+
+
+        .description p {
+            margin-top: 7px;
+        }
+
+
+        .reported-by {
+
+            margin-top: 12px;
+
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        .empty {
+
+            color: #777;
+
+            text-align: center;
+
+            padding: 30px;
+        }
+
+
+        .success {
+
+            background: #e8f7ed;
+
+            color: #218838;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            margin-top: 15px;
+
+            display: none;
+        }
+
+
+        .error {
+
+            background: #ffe5e3;
+
+            color: #c62828;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            margin-top: 15px;
+
+            display: none;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .cards {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .container {
+
+                padding: 15px;
+            }
+
+
+            .navbar {
+
+                padding: 15px;
+            }
+
+
+            .user {
+
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+
+            🔥 Fire<span>Guard</span>
+
+        </div>
+
+
+        <div class="user">
+
+            <span id="userEmail">
+                Resident
+            </span>
+
+            <button
+                class="logout"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+
+        <h1>
+            Resident Dashboard
+        </h1>
+
+
+        <p class="subtitle">
+
+            Smart Society Fire Safety Management System
+
+        </p>
+
+
+
+        <!-- STATISTICS -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h3>
+                    🔥 Active Fire Alerts
+                </h3>
+
+                <div
+                    class="number danger"
+                    id="fireCount">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <h3>
+                    💨 Smoke Alerts
+                </h3>
+
+                <div
+                    class="number warning"
+                    id="smokeCount">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <h3>
+                    🛡️ Safety Status
+                </h3>
+
+                <div
+                    class="number safe"
+                    id="safetyStatus">
+
+                    SAFE
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- REPORT FIRE -->
+
+        <div class="section">
+
+
+            <h2>
+                🚨 Report Fire / Smoke
+            </h2>
+
+
+            <p style="color:#777; margin-bottom:20px;">
+
+                If you see fire or smoke, report it immediately.
+
+                All society members will receive the alert.
+
+            </p>
+
+
+
+            <div class="form-grid">
+
+
+                <!-- TYPE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Alert Type
+                    </label>
+
+
+                    <select id="alertType">
+
+                        <option value="fire">
+                            🔥 Fire
+                        </option>
+
+                        <option value="smoke">
+                            💨 Smoke
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- BUILDING -->
+
+                <div class="form-group">
+
+                    <label>
+                        Building
+                    </label>
+
+
+                    <select id="building">
+
+                        <option value="">
+                            Select Building
+                        </option>
+
+                        <option value="A">
+                            Building A
+                        </option>
+
+                        <option value="B">
+                            Building B
+                        </option>
+
+                        <option value="C">
+                            Building C
+                        </option>
+
+                        <option value="D">
+                            Building D
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- FLOOR -->
+
+                <div class="form-group">
+
+                    <label>
+                        Floor
+                    </label>
+
+
+                    <input
+                        type="number"
+                        id="floor"
+                        min="1"
+                        placeholder="Example: 3">
+
+                </div>
+
+
+
+                <!-- FLAT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Flat Number
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="flat"
+                        placeholder="Example: 302">
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Description
+                    </label>
+
+
+                    <textarea
+                        id="description"
+                        placeholder="Describe what you saw..."></textarea>
+
+                </div>
+
+
+            </div>
+
+
+
+            <button
+                class="report-btn"
+                onclick="submitReport()">
+
+                🚨 Report Emergency
+
+            </button>
+
+
+
+            <div
+                class="success"
+                id="successMessage">
+
+                ✅ Emergency report submitted successfully.
+                All society members can now see this alert.
+
+            </div>
+
+
+
+            <div
+                class="error"
+                id="errorMessage">
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ACTIVE ALERTS -->
+
+        <div class="section">
+
+
+            <h2>
+                🚨 Active Alerts
+            </h2>
+
+
+            <div id="alertsContainer">
+
+                <div class="empty">
+
+                    Loading alerts...
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- SAFETY INFORMATION -->
+
+        <div class="section">
+
+
+            <h2>
+                🛡️ Fire Safety
+            </h2>
+
+
+            <div class="alert-info">
+
+                <p>
+                    • Stay calm during a fire emergency.
+                </p>
+
+                <p>
+                    • Do not use elevators during a fire.
+                </p>
+
+                <p>
+                    • Use emergency exits.
+                </p>
+
+                <p>
+                    • Follow alerts from FireGuard.
+                </p>
+
+                <p>
+                    • Call emergency services if required.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FIREBASE -->
+
+    <script type="module">
+
+
+        import {
+            initializeApp
+        }
+        from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        }
+        from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            query,
+            orderBy,
+            onSnapshot,
+            serverTimestamp
+        }
+        from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+
+        /* FIREBASE CONFIG */
+
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCI4pL8pfQJh_6hjspgw-19Btdn7dtHLx0",
+
+            authDomain:
+                "fireguard-5b48c.firebaseapp.com",
+
+            projectId:
+                "fireguard-5b48c",
+
+            storageBucket:
+                "fireguard-5b48c.firebasestorage.app",
+
+            messagingSenderId:
+                "582631223976",
+
+            appId:
+                "1:582631223976:web:167a48703115b6dc0a889d",
+
+            measurementId:
+                "G-4PJGR0P7D7"
+
+        };
+
+
+
+        /* INITIALIZE FIREBASE */
+
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const auth =
+            getAuth(app);
+
+
+        const db =
+            getFirestore(app);
+
+
+
+        let currentUser = null;
+
+
+
+        /* CHECK LOGIN */
+
+
+        onAuthStateChanged(
+            auth,
+            (user) => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "index.html";
+
+                    return;
+
+                }
+
+
+                currentUser = user;
+
+
+                document.getElementById(
+                    "userEmail"
+                ).textContent =
+                    user.email;
+
+            }
+        );
+
+
+
+        /* SUBMIT REPORT */
+
+
+        window.submitReport =
+        async function() {
+
+
+            const type =
+                document.getElementById(
+                    "alertType"
+                ).value;
+
+
+            const building =
+                document.getElementById(
+                    "building"
+                ).value;
+
+
+            const floor =
+                document.getElementById(
+                    "floor"
+                ).value;
+
+
+            const flat =
+                document.getElementById(
+                    "flat"
+                ).value;
+
+
+            const description =
+                document.getElementById(
+                    "description"
+                ).value;
+
+
+
+            const success =
+                document.getElementById(
+                    "successMessage"
+                );
+
+
+            const error =
+                document.getElementById(
+                    "errorMessage"
+                );
+
+
+            success.style.display =
+                "none";
+
+            error.style.display =
+                "none";
+
+
+
+            /* VALIDATION */
+
+
+            if (
+                building === "" ||
+                floor === "" ||
+                flat === ""
+            ) {
+
+                error.textContent =
+                    "Please enter Building, Floor and Flat number.";
+
+                error.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+
+            if (!currentUser) {
+
+                error.textContent =
+                    "You are not logged in.";
+
+                error.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+
+            try {
+
+
+                /* SAVE TO FIRESTORE */
+
+
+                await addDoc(
+
+                    collection(
+                        db,
+                        "reports"
+                    ),
+
+                    {
+
+                        type: type,
+
+                        building: building,
+
+                        floor: floor,
+
+                        flat: flat,
+
+                        description:
+                            description,
+
+                        reporterEmail:
+                            currentUser.email,
+
+                        reporterRole:
+                            "resident",
+
+                        reporterUid:
+                            currentUser.uid,
+
+                        status:
+                            "active",
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+
+                /* SUCCESS */
+
+
+                success.style.display =
+                    "block";
+
+
+                document.getElementById(
+                    "floor"
+                ).value = "";
+
+
+                document.getElementById(
+                    "flat"
+                ).value = "";
+
+
+                document.getElementById(
+                    "description"
+                ).value = "";
+
+
+
+            }
+
+            catch (errorObject) {
+
+                console.error(
+                    errorObject
+                );
+
+
+                error.textContent =
+                    "Unable to submit report. Please try again.";
+
+
+                error.style.display =
+                    "block";
+
+            }
+
+        };
+
+
+
+        /* LOAD ALL ACTIVE ALERTS */
+
+
+        const reportsQuery =
+            query(
+
+                collection(
+                    db,
+                    "reports"
+                ),
+
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+
+            );
+
+
+
+        onSnapshot(
+
+            reportsQuery,
+
+            (snapshot) => {
+
+
+                const container =
+                    document.getElementById(
+                        "alertsContainer"
+                    );
+
+
+                container.innerHTML =
+                    "";
+
+
+                let fireCount =
+                    0;
+
+
+                let smokeCount =
+                    0;
+
+
+                let activeCount =
+                    0;
+
+
+
+                snapshot.forEach(
+                    (reportDoc) => {
+
+
+                        const report =
+                            reportDoc.data();
+
+
+                        /* IGNORE RESOLVED ALERTS */
+
+
+                        if (
+                            report.status ===
+                            "resolved"
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        activeCount++;
+
+
+
+                        if (
+                            report.type ===
+                            "fire"
+                        ) {
+
+                            fireCount++;
+
+                        }
+                        else {
+
+                            smokeCount++;
+
+                        }
+
+
+
+                        /* CREATE ALERT */
+
+
+                        const alertBox =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        if (
+                            report.type ===
+                            "fire"
+                        ) {
+
+                            alertBox.className =
+                                "alert alert-fire";
+
+                        }
+                        else {
+
+                            alertBox.className =
+                                "alert alert-smoke";
+
+                        }
+
+
+
+                        const title =
+                            report.type ===
+                            "fire"
+
+                            ? "🔥 Fire Detected"
+
+                            : "💨 Smoke Detected";
+
+
+
+                        const badge =
+                            report.type ===
+                            "fire"
+
+                            ? "FIRE"
+
+                            : "SMOKE";
+
+
+
+                        const badgeClass =
+                            report.type ===
+                            "fire"
+
+                            ? "fire-badge"
+
+                            : "smoke-badge";
+
+
+
+                        alertBox.innerHTML = `
+
+
+                            <div class="alert-header">
+
+
+                                <strong>
+
+                                    ${title}
+
+                                </strong>
+
+
+                                <span
+                                    class="badge ${badgeClass}">
+
+                                    ${badge}
+
+                                </span>
+
+
+                            </div>
+
+
+
+                            <div class="alert-info">
+
+
+                                <strong>
+                                    Building:
+                                </strong>
+
+                                ${report.building}
+
+                                <br>
+
+
+                                <strong>
+                                    Floor:
+                                </strong>
+
+                                ${report.floor}
+
+                                <br>
+
+
+                                <strong>
+                                    Flat:
+                                </strong>
+
+                                ${report.flat}
+
+
+                            </div>
+
+
+
+                            <div class="reported-by">
+
+
+                                <strong>
+                                    Reported by:
+                                </strong>
+
+                                ${report.reporterEmail ||
+                                "Society Member"}
+
+
+                                <br>
+
+
+                                <strong>
+                                    Role:
+                                </strong>
+
+                                ${report.reporterRole ||
+                                "Resident"}
+
+
+                            </div>
+
+
+
+                            <div class="description">
+
+
+                                <strong>
+                                    Description:
+                                </strong>
+
+
+                                <p>
+
+                                    ${report.description ||
+                                    "No description provided"}
+
+                                </p>
+
+
+                            </div>
+
+
+                        `;
+
+
+
+                        container.appendChild(
+                            alertBox
+                        );
+
+
+                    }
+                );
+
+
+
+                /* NO ALERTS */
+
+
+                if (
+                    activeCount === 0
+                ) {
+
+                    container.innerHTML = `
+
+                        <div class="empty">
+
+                            ✅ No active fire or smoke alerts
+
+                        </div>
+
+                    `;
+
+                }
+
+
+
+                /* UPDATE COUNTERS */
+
+
+                document.getElementById(
+                    "fireCount"
+                ).textContent =
+                    fireCount;
+
+
+                document.getElementById(
+                    "smokeCount"
+                ).textContent =
+                    smokeCount;
+
+
+
+                /* SAFETY STATUS */
+
+
+                const status =
+                    document.getElementById(
+                        "safetyStatus"
+                    );
+
+
+                if (
+                    activeCount > 0
+                ) {
+
+                    status.textContent =
+                        "ALERT";
+
+                    status.className =
+                        "number danger";
+
+                }
+                else {
+
+                    status.textContent =
+                        "SAFE";
+
+                    status.className =
+                        "number safe";
+
+                }
+
+            }
+
+        );
+
+
+
+        /* LOGOUT */
+
+
+        window.logout =
+        async function() {
+
+            await signOut(auth);
+
+            window.location.href =
+                "index1.html";
+
+        };
+
+
+    </script>
+
+
+</body>
+
+</html>
